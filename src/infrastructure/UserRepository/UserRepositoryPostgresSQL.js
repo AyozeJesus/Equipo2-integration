@@ -1,7 +1,7 @@
 import pg from "pg"
 import { UserRepository } from "../../domain/repository/UserRepository.js"
-import { User } from "../../domain/models/User.js"
 import { UserPassword } from "../../domain/models/UserPassword.js"
+import { User } from "../../domain/models/User.js"
 export class UserRepositoryPostgressSql extends UserRepository {
   constructor() {
     super()
@@ -38,8 +38,47 @@ export class UserRepositoryPostgressSql extends UserRepository {
   }
 
   async findById(id) {
-    
+    if (id === null) {
+      return null
+    }
+    const query = `
+    SELECT * FROM users
+    WHERE id = $1
+  `
+
+    const values = [id]
+
+    const result = await this.client.query(query, values)
+    const userResult = result.rows[0]
+    if (userResult) {
+      return new User(
+        userResult.id,
+        userResult.name,
+        userResult.email,
+        new UserPassword(userResult.password),
+        userResult.age,
+      )
+    } else {
+      return null
+    }
   }
 
-  async existsByEmail(email) {}
+  async existsByEmail(email) {
+    const query = `
+    SELECT *
+    FROM users
+    WHERE email = $1
+  `
+
+    const values = [email]
+
+    const result = await this.client.query(query, values)
+    console.log(result.rows[0])
+    const userResult = result.rows[0]
+    if (userResult) {
+      return true
+    } else {
+      return false
+    }
+  }
 }

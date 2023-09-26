@@ -18,7 +18,7 @@ describe("UserRepositoryPostgressSql", () => {
     await userRepository.disconnect()
   })
 
-  it.only("saves a user in the database", async () => {
+  it("saves a user in the database", async () => {
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
     const email = "john@email.com"
