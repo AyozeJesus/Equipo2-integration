@@ -2,6 +2,7 @@ import pg from "pg"
 import { UserRepository } from "../../domain/repository/UserRepository.js"
 import { UserPassword } from "../../domain/models/UserPassword.js"
 import { User } from "../../domain/models/User.js"
+import { boolean } from "zod"
 export class UserRepositoryPostgressSql extends UserRepository {
   constructor() {
     super()
@@ -38,29 +39,25 @@ export class UserRepositoryPostgressSql extends UserRepository {
   }
 
   async findById(id) {
-    if (id === null) {
-      return null
-    }
     const query = `
-    SELECT * FROM users
-    WHERE id = $1
-  `
+      SELECT * FROM users
+      WHERE id = $1
+    `
 
     const values = [id]
 
     const result = await this.client.query(query, values)
     const userResult = result.rows[0]
-    if (userResult) {
-      return new User(
-        userResult.id,
-        userResult.name,
-        userResult.email,
-        new UserPassword(userResult.password),
-        userResult.age,
-      )
-    } else {
+    if (!userResult) {
       return null
     }
+    return new User(
+      userResult.id,
+      userResult.name,
+      userResult.email,
+      new UserPassword(userResult.password),
+      userResult.age,
+    )
   }
 
   async existsByEmail(email) {
@@ -71,14 +68,9 @@ export class UserRepositoryPostgressSql extends UserRepository {
   `
 
     const values = [email]
-
     const result = await this.client.query(query, values)
-    console.log(result.rows[0])
     const userResult = result.rows[0]
-    if (userResult) {
-      return true
-    } else {
-      return false
-    }
+
+    return Boolean(userResult)
   }
 }
