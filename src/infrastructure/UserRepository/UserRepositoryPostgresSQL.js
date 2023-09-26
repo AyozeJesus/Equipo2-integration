@@ -2,7 +2,6 @@ import pg from "pg"
 import { UserRepository } from "../../domain/repository/UserRepository.js"
 import { UserPassword } from "../../domain/models/UserPassword.js"
 import { User } from "../../domain/models/User.js"
-import { boolean } from "zod"
 export class UserRepositoryPostgressSql extends UserRepository {
   constructor() {
     super()
