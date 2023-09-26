@@ -8,8 +8,6 @@ services:
       POSTGRES_USER: "admin"
       POSTGRES_PASSWORD: "password"
       POSTGRES_DB: "my-project"
-    volumes:
-      - ./docker/postgres/init/init.sql:/docker-entrypoint-initdb.d/init.sql
   mongo:
     image: mongo:6.0.7-jammy
     environment:
