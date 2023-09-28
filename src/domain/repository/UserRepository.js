@@ -1,16 +1,28 @@
 export class UserRepository {
-  // eslint-disable-next-line no-unused-vars
-  save(user) {
+  /**
+   * Saves the user
+   * @param {User} user
+   * @returns {Promise<void>}
+   */
+  async save(user) {
     throw new Error("This is an abstract class. You should implement the save method")
   }
 
-  // eslint-disable-next-line no-unused-vars
-  findById(id) {
+  /**
+   * Finds the user by id
+   * @param {string} id
+   * @returns {Promise<User | null>}
+   */
+  async findById(id) {
     throw new Error("This is an abstract class. You should implement the findById method")
   }
 
-  // eslint-disable-next-line no-unused-vars
-  existsByEmail(email) {
+  /**
+   * Check if the user exists by email
+   * @param {string} email
+   * @returns {Promise<boolean>}
+   */
+  async existsByEmail(email) {
     throw new Error("This is an abstract class. You should implement the existsByEmail method")
   }
 }

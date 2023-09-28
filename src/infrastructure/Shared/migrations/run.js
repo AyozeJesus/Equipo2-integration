@@ -1,25 +1,21 @@
-import pg from "pg"
-import { up } from "./1695749510702.js"
+import pkg from "pg"
+const { Client } = pkg
+import { up as up1695745482646 } from "./1695745482646.js"
 
-export const client = new pg.Client({
+const client = new Client({
   user: "admin",
   host: "localhost",
   database: "my-project",
   password: "password",
-  port: "5432",
 })
 
-async function runMigrations() {
-  try {
-    await client.connect()
-    console.log("Conexion exitosa")
-    await up(client)
-    console.log("Tabla 'users' creada con éxito")
-    await client.end()
-    console.log("Conexión cerrada")
-  } catch (error) {
-    console.error("Error:", error)
-  }
-}
+await client.connect()
 
-runMigrations()
+console.log("Running migrations...")
+await up1695745482646(client)
+
+console.log("1695745482646 Done!")
+
+await client.end()
+
+console.log("Done!")
