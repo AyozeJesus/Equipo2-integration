@@ -16,8 +16,8 @@ export const config = {
   },
   mailgun: {
     user: "api",
-    domain : "sandbox44ea06b312824e038c26fe47b695edac.mailgun.org",
-    apiKey : process.env.MAILGUN_API_KEY
+    domain: "sandbox44ea06b312824e038c26fe47b695edac.mailgun.org",
+    apiKey: process.env.MAILGUN_API_KEY,
   },
   testmail: {
     apikey: process.env.TESTMAIL_API_KEY,
