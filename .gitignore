@@ -21,4 +21,5 @@ dist/
 # Misc
 .DS_Store
 
-temp.js
+.env
+

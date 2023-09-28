@@ -9,7 +9,7 @@ describe("EmailSenderMailgun", () => {
     const testInbox = new TestInbox()
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
-    const email = " 9eqfr.test@inbox.testmail.app"
+    const email = "3yq63.test@inbox.testmail.app"
     const age = 18
     const password = "password"
     const user = User.create(id, name, email, password, age)
@@ -17,11 +17,12 @@ describe("EmailSenderMailgun", () => {
     await emailSender.sendWelcomeEmail(user)
 
     const receivedEmail = await testInbox.getLastEmail()
-    expect(receivedEmail.html).toMatch("¡Bienvenido a Mi proyecto John Doe!")
-  })
+    expect(receivedEmail.text).toMatch("¡Bienvenido a Mi proyecto John Doe!")
+  }, 10000)
 
   it("throws an error if email is invalid", async () => {
     const emailSender = new EmailSenderMailgun()
+    // eslint-disable-next-line no-unused-vars
     const testInbox = new TestInbox()
     const id = "00000000-0000-0000-0000-000000000000"
     const name = "John Doe"
