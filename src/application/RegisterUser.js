@@ -1,6 +1,12 @@
 import { User } from "../domain/models/User.js"
 
 export class RegisterUser {
+  /**
+   *
+   * @param {UserRepository} userRepository
+   * @param idGenerator
+   * @param emailSender
+   */
   constructor(userRepository, idGenerator, emailSender) {
     this.userRepository = userRepository
     this.idGenerator = idGenerator
