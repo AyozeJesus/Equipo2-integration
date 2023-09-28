@@ -1,18 +1,18 @@
 import { EmailSender } from "../../domain/services/EmailSender.js"
+import { config } from "../Shared/config.js"
 
 export class EmailSenderMailgun extends EmailSender {
   async sendWelcomeEmail(user) {
     const body = new FormData()
-    const domain = "sandbox261f754ab73b43388177e85a621a13fb.mailgun.org"
+    const domain = config.mailgun.domain
 
-    body.append("from", `Daniel Ramos <mailgun@${domain}>`)
+    body.append("from", `Ayoze Jesus <mailgun@${domain}>`)
     body.append("to", user.email.email)
     body.append("subject", "Hello")
-    body.append("template", "welcome")
-    body.append("t:variables", JSON.stringify({ name: user.name }))
+    body.append("text", "¡Bienvenido a Mi proyecto John Doe!")
 
-    const mailgunUser = "api"
-    const apiKey = "TODO"
+    const mailgunUser = config.mailgun.user
+    const apiKey = config.mailgun.apiKey
     const response = await fetch(`https://api.mailgun.net/v3/${domain}/messages`, {
       method: "POST",
       headers: {
@@ -20,7 +20,6 @@ export class EmailSenderMailgun extends EmailSender {
       },
       body,
     })
-
     const data = await response.json()
 
     if (!response.ok) {
