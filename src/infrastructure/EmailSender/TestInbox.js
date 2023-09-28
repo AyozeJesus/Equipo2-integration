@@ -2,14 +2,14 @@ import { sleep } from "../../domain/utils/sleep.js"
 import { config } from "../Shared/config.js"
 
 export class TestInbox {
-  constructor({ apiKey = config.testInbox.apiKey, namespace = config.testInbox.namespace } = {}) {
-    this.apiKey = apiKey
-    this.namespace = namespace
+  constructor() {
+    this.messages = []
   }
   async getEmails(from) {
     const params = new URLSearchParams({
-      apikey: this.apiKey,
-      namespace: this.namespace,
+      apikey: config.testmail.apikey,
+      namespace: config.testmail.namespace,
+      pretty: true,
       timestamp_from: from.getTime(),
     })
     const response = await fetch(`https://api.testmail.app/api/json?${params.toString()}`)
