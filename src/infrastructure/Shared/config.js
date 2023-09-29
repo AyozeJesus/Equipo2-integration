@@ -6,6 +6,7 @@ export const config = {
     host: "localhost",
     database: "my-project",
     password: "password",
+    port: "5432",
   },
   mongo: {
     user: "admin",

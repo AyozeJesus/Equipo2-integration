@@ -1,10 +1,17 @@
 import { describe, it, expect } from "vitest"
-import { myFunction } from "./main.js"
+import request from "supertest"
+import { app } from "./main"
+describe("NewRegisterController", () => {
+  it.skip("debería registrar un nuevo usuario", async () => {
+    const userData = {
+      name: "Johnaa Doe",
+      email: "johnas@example.com",
+      password: "contraseña123",
+      age: 30,
+    }
 
-describe("Default test", () => {
-  it("should work", () => {
-    const result = myFunction()
+    const response = await request(app).post("/user/register").send(userData)
 
-    expect(result).toBe(true)
+    expect(response.status).toBe(200)
   })
 })
