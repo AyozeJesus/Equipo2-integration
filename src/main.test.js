@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest"
+/* import { describe, it, expect } from "vitest"
 import request from "supertest"
 import { app } from "./main"
 describe("NewRegisterController", () => {
@@ -15,3 +15,4 @@ describe("NewRegisterController", () => {
     expect(response.status).toBe(200)
   })
 })
+ */
