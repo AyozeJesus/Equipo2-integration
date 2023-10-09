@@ -114,7 +114,7 @@ describe("User", () => {
 
     expect(() =>
       User.create(notImportantId, notImportantName, notImportantEmail, tooShortPassword, notImportantAge),
-    ).toThrow("Password must be 6 characters or longer")
+    ).toThrow("Invalid password")
   })
 
   it("throws an error with an invalid email", () => {
