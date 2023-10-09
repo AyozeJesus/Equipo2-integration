@@ -10,25 +10,32 @@ export class UserRepositoryMongo extends UserRepository {
     this.client = mongoClient
     this.database = this.client.db(config.mongo.database)
     this.users = this.database.collection("users")
+    this.connected = false
   }
 
   async connect() {
     await this.client.connect()
+    this.connected = true
   }
 
   async disconnect() {
+    this.ensureIsConnected()
     await this.client.close()
+    this.connected = false
   }
 
   async reset() {
+    this.ensureIsConnected()
     await this.users.deleteMany({})
   }
 
   async save(user) {
+    this.ensureIsConnected()
     await this.users.insertOne({ ...user })
   }
 
   async findById(id) {
+    this.ensureIsConnected()
     const savedUser = await this.users.findOne({ id })
 
     if (!savedUser) {
@@ -45,8 +52,15 @@ export class UserRepositoryMongo extends UserRepository {
   }
 
   async existsByEmail(email) {
+    this.ensureIsConnected()
     const savedUser = await this.users.findOne({ "email.email": email }, { projection: { _id: 1 } })
 
     return Boolean(savedUser)
+  }
+
+  ensureIsConnected() {
+    if (!this.connected) {
+      throw new Error("UserRepository must be connected first")
+    }
   }
 }

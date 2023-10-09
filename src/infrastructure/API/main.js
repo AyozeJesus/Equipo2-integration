@@ -4,19 +4,13 @@ import { RegisterUser } from "../../application/RegisterUser.js"
 import { UserRepositoryPostgresSQL } from "../UserRepository/UserRepositoryPostgresSQL.js"
 import { EmailSenderMock } from "../EmailSender/EmailSenderMock.js"
 import { IdGeneratorNode } from "../IdGenerator/IdGeneratorNode.js"
-import { errorCodeToStatus } from "./errorCodeToStatus.js"
-
-// eslint-disable-next-line no-unused-vars
-export function errorHandler(err, req, res, next) {
-  const statusCode = errorCodeToStatus(err.code)
-  res.status(statusCode).json({ code: err.code, error: err.message })
-}
+import { errorHandler } from "./errorHandler.js"
 
 export const app = express()
 
 const userRepository = new UserRepositoryPostgresSQL()
 
-await userRepository.connect()
+//await userRepository.connect()
 
 app.use(express.json())
 
@@ -26,7 +20,7 @@ const idGenerator = new IdGeneratorNode()
 const registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
 const registerController = new NewRegisterController(registerUser)
 app.post("/user/register", registerController.execute)
-
+console.log("esta llegando aqui")
 app.use(errorHandler)
 
 app.listen(3000, () => {

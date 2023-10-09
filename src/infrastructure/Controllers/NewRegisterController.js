@@ -12,6 +12,6 @@ export class NewRegisterController {
 
     await this.registrerUser.execute(name, email, password, age)
 
-    res.status(200).json()
+    res.status(200).json({ message: "new user register" })
   }
 }
