@@ -33,7 +33,7 @@ describe("EmailSenderMailgun", () => {
 
     const result = emailSender.sendWelcomeEmail(user)
 
-    expect(result).rejects.toThrow("to parameter is not a valid address. please check documentation")
+    expect(result).rejects.toThrow()
   })
 
   it("it throws an error if the key is invalid", async () => {

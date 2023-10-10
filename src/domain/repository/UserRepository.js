@@ -20,6 +20,16 @@ export class UserRepository {
   }
 
   /**
+   * Finds the user by email
+   * @param {string} email
+   * @returns {Promise<User | null>}
+   */
+  // eslint-disable-next-line no-unused-vars
+  async findByEmail(email) {
+    throw new Error("This is an abstract class. You should implement the findById method")
+  }
+
+  /**
    * Check if the user exists by email
    * @param {string} email
    * @returns {Promise<boolean>}

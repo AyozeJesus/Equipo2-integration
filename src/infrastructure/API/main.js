@@ -1,5 +1,5 @@
-import { app } from "./app.js"
+import { Server } from "./Server.js"
 
-app.listen(3000, () => {
-  console.log(`Servidor escuchando en el puerto 3000`)
-})
+const server = new Server()
+await server.connect()
+server.listen()
