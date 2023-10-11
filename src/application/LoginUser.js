@@ -1,4 +1,4 @@
-export class Login {
+export class LoginUser {
   constructor(userRepository) {
     this.userRepository = userRepository
   }

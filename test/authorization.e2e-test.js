@@ -1,8 +1,8 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest"
-import { Server } from "./Server"
+import { Server } from "../src/infrastructure/API/Server"
 import tepper from "tepper"
 
-describe("API", () => {
+describe("authorization API", () => {
   let server
   beforeAll(async () => {
     server = Server.createForTesting()
@@ -18,7 +18,7 @@ describe("API", () => {
   })
 
   it("user is registered properly", async () => {
-    const { status, body } = await tepper(server.app)
+    await tepper(server.app)
       .post("/user/register")
       .send({
         name: "John Doe",
@@ -28,8 +28,16 @@ describe("API", () => {
       })
       .run()
 
+    const { body, status } = await tepper(server.app)
+      .post("/user/login")
+      .send({
+        email: "john@email12.com",
+        password: "password",
+      })
+      .run()
+
     console.log(body)
     expect(status).toBe(200)
-    expect(body).toStrictEqual({ message: "new user register" })
+    expect(body.token).toContain("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
   })
 })

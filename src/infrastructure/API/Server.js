@@ -6,6 +6,7 @@ import { EmailSenderMock } from "../EmailSender/EmailSenderMock.js"
 import { EmailSenderMailgun } from "../EmailSender/EmailSenderMailgun.js"
 import { IdGeneratorNode } from "../IdGenerator/IdGeneratorNode.js"
 import { errorHandler } from "./errorHandler.js"
+import { LoginController } from "../Controllers/LoginController.js"
 
 export class Server {
   static createForTesting() {
@@ -20,6 +21,7 @@ export class Server {
 
     this.app.use(express.json())
     this.app.post("/user/register", this.dependencies.registerController.execute)
+    this.app.post("/user/login", this.dependencies.loginController.execute)
 
     this.app.use(errorHandler)
   }
@@ -28,6 +30,7 @@ export class Server {
     const idGenerator = new IdGeneratorNode()
     const registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
     const registerController = new NewRegisterController(registerUser)
+    const loginController = new LoginController()
 
     return {
       userRepository,
@@ -35,6 +38,7 @@ export class Server {
       emailSender,
       registerController,
       registerUser,
+      loginController,
     }
   }
 
