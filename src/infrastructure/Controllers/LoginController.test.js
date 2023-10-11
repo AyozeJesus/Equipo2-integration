@@ -55,10 +55,22 @@ describe("LoginController", () => {
     expect(jsonSpy).toHaveBeenCalledWith({ token })
   })
 
-  it("should respond with 400 when required fields are missing", async () => {
+  it("should respond with 400 when email is missing", async () => {
     const req = {
       body: {
         password,
+      },
+    }
+
+    const result = controller.execute(req, res)
+
+    await expect(result).rejects.toBeInstanceOf(MissingRequiredFieldsError)
+  })
+
+  it("should respond with 400 when password is missing", async () => {
+    const req = {
+      body: {
+        email,
       },
     }
 
