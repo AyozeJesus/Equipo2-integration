@@ -1,5 +1,5 @@
-import { DomainError } from "./DomainError"
-import { ErrorCode } from "./ErrorCode"
+import { DomainError } from "./DomainError.js"
+import { ErrorCode } from "./ErrorCode.js"
 
 export class MissingRequiredFieldsError extends DomainError {
   constructor() {

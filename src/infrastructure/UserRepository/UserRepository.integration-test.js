@@ -36,19 +36,7 @@ describe.each([
       const savedUser = await userRepository.findById(id)
       expect(savedUser).toEqual(user)
     })
-    it("findByEmail returns the user if found", async () => { 
-      const id = "00000000-0000-0000-0000-000000000000"
-      const name = "John Doe"
-      const email = "john@email.com"
-    it("findById returns null if user not found", async () => {
-      const id = "00000000-0000-0000-0000-000000000000"
-
-      const savedUser = await userRepository.findById(id)
-
-      expect(savedUser).toEqual(null)
-    })
-
-    it("existsByEmail returns true if user is found", async () => {
+    it("findByEmail returns the user if found", async () => {
       const id = "00000000-0000-0000-0000-000000000000"
       const name = "John Doe"
       const email = "john@email.com"
@@ -56,29 +44,57 @@ describe.each([
       const password = "password"
       const user = User.create(id, name, email, password, age)
       await userRepository.save(user)
+      await userRepository.findByEmail(email)
+      expect(user.email.email).toEqual("john@email.com")
 
-      const existsUser = await userRepository.existsByEmail(email)
+      it("findByEmail return null if user not found", async () => {
+        const email = " "
 
-      expect(existsUser).toBe(true)
+        const savedUser = await userRepository.findByEmail(email)
+
+        expect(savedUser).toEqual(null)
+      })
+
+      it("findById returns null if user not found", async () => {
+        const id = "00000000-0000-0000-0000-000000000000"
+
+        const savedUser = await userRepository.findById(id)
+
+        expect(savedUser).toEqual(null)
+      })
+
+      it("existsByEmail returns true if user is found", async () => {
+        const id = "00000000-0000-0000-0000-000000000000"
+        const name = "John Doe"
+        const email = "john@email.com"
+        const age = 18
+        const password = "password"
+        const user = User.create(id, name, email, password, age)
+        await userRepository.save(user)
+
+        const existsUser = await userRepository.existsByEmail(email)
+
+        expect(existsUser).toBe(true)
+      })
+
+      it("existsByEmail returns false if user is not found", async () => {
+        const email = "john@email.com"
+
+        const existsUser = await userRepository.existsByEmail(email)
+
+        expect(existsUser).toBe(false)
+      })
     })
 
-    it("existsByEmail returns false if user is not found", async () => {
-      const email = "john@email.com"
+    it.each([["save"], ["findById"], ["existsByEmail"], ["reset"], ["disconnect"]])(
+      "throws an error on %s if not connected first",
+      (method) => {
+        const repository = new UserRepository()
 
-      const existsUser = await userRepository.existsByEmail(email)
+        const result = repository[method]()
 
-      expect(existsUser).toBe(false)
-    })
+        expect(result).rejects.toThrowError("UserRepository must be connected first")
+      },
+    )
   })
-
-  it.each([["save"], ["findById"], ["existsByEmail"], ["reset"], ["disconnect"]])(
-    "throws an error on %s if not connected first",
-    (method) => {
-      const repository = new UserRepository()
-
-      const result = repository[method]()
-
-      expect(result).rejects.toThrowError("UserRepository must be connected first")
-    },
-  )
 })

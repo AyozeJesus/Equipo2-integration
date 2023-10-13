@@ -34,6 +34,17 @@ export class UserRepositoryMongo extends UserRepository {
     await this.users.insertOne({ ...user })
   }
 
+  async findByEmail(email) {
+    this.ensureIsConnected()
+
+    const user = await this.users.findOne({ email })
+
+    if (!user) {
+      return null
+    }
+
+    return new User(user.id, user.name, user.email, new UserPassword(user.password), user.age)
+  }
   async findById(id) {
     this.ensureIsConnected()
     const savedUser = await this.users.findOne({ id })

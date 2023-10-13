@@ -36,8 +36,11 @@ describe("authorization API", () => {
       })
       .run()
 
-    console.log(body)
+    console.log(body, "Este es el body") 
     expect(status).toBe(200)
+
+    expect(body).toBeDefined()
+    expect(typeof body.token).toBe("string")
     expect(body.token).toContain("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9")
   })
 })

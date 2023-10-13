@@ -13,6 +13,7 @@ export class LoginController {
     }
 
     const token = await this.loginUser.execute(email, password)
+    console.log(token, "token")
     res.status(200).json({ token })
   }
 }

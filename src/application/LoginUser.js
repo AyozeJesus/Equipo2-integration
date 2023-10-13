@@ -1,13 +1,15 @@
+import { UserNotFoundError } from "../domain/errors/UserNotFoundError.js"
 export class LoginUser {
-  constructor(userRepository) {
+  constructor(userRepository, jwtGenerator) {
     this.userRepository = userRepository
+    this.jwtGenerator = jwtGenerator
   }
 
   async execute({ email, password }) {
-    const userByEmail = await this.userRepository.findByEmail(email)
-
-    if (userByEmail) {
-      return userByEmail.compareWith(password)
+    const user = await this.userRepository.findByEmail(email)
+    if (!user) {
+      throw new UserNotFoundError()
     }
+    return this.jwtGenerator.generate()
   }
 }
