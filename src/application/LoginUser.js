@@ -1,3 +1,4 @@
+import { InvalidPasswordError } from "../domain/errors/InvalidPasswordError.js"
 import { UserNotFoundError } from "../domain/errors/UserNotFoundError.js"
 export class LoginUser {
   constructor(userRepository, jwtGenerator) {
@@ -10,6 +11,10 @@ export class LoginUser {
     if (!user) {
       throw new UserNotFoundError()
     }
+    if (user.compareWith(password)) {
+      throw new InvalidPasswordError()
+    }
+
     return this.jwtGenerator.generate()
   }
 }
