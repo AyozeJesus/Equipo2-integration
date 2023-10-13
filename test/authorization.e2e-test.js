@@ -36,7 +36,7 @@ describe("authorization API", () => {
       })
       .run()
 
-    console.log(body, "Este es el body") 
+    console.log(body, "Este es el body")
     expect(status).toBe(200)
 
     expect(body).toBeDefined()

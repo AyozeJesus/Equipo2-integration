@@ -81,7 +81,7 @@ describe("User", () => {
 
     const user = User.create(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
 
-    expect(user.compareWith(password)).toBe(true)
+    expect(user.hasPassword(password)).toBe(true)
   })
 
   it("has another password", () => {
@@ -90,7 +90,7 @@ describe("User", () => {
 
     const user = User.create(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
 
-    expect(user.compareWith(anotherPassword)).toBe(false)
+    expect(user.hasPassword(anotherPassword)).toBe(false)
   })
 
   it("keeps the password hashed", () => {

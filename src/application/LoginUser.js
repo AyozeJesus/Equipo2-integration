@@ -13,7 +13,7 @@ export class LoginUser {
     if (!user) {
       throw new UserNotFoundError()
     }
-    if (!user.compareWith(password)) {
+    if (!user.hasPassword(password)) {
       throw new InvalidPasswordError()
     }
 
