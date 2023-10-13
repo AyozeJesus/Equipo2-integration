@@ -36,7 +36,10 @@ describe.each([
       const savedUser = await userRepository.findById(id)
       expect(savedUser).toEqual(user)
     })
-
+    it("findByEmail returns the user if found", async () => { 
+      const id = "00000000-0000-0000-0000-000000000000"
+      const name = "John Doe"
+      const email = "john@email.com"
     it("findById returns null if user not found", async () => {
       const id = "00000000-0000-0000-0000-000000000000"
 

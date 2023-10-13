@@ -7,6 +7,7 @@ import { EmailSenderMailgun } from "../EmailSender/EmailSenderMailgun.js"
 import { IdGeneratorNode } from "../IdGenerator/IdGeneratorNode.js"
 import { errorHandler } from "./errorHandler.js"
 import { LoginController } from "../Controllers/LoginController.js"
+import { LoginUser } from "../../application/LoginUser.js"
 
 export class Server {
   static createForTesting() {
@@ -30,7 +31,8 @@ export class Server {
     const idGenerator = new IdGeneratorNode()
     const registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
     const registerController = new NewRegisterController(registerUser)
-    const loginController = new LoginController()
+    const loginUser = new LoginUser(userRepository)
+    const loginController = new LoginController(loginUser)
 
     return {
       userRepository,
