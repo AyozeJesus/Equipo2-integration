@@ -6,12 +6,14 @@ export class LoginUser {
     this.jwtGenerator = jwtGenerator
   }
 
-  async execute({ email, password }) {
+  async execute(email, password) {
     const user = await this.userRepository.findByEmail(email)
+    console.log(user, "user")
+    console.log(password, "password")
     if (!user) {
       throw new UserNotFoundError()
     }
-    if (user.compareWith(password)) {
+    if (!user.compareWith(password)) {
       throw new InvalidPasswordError()
     }
 
